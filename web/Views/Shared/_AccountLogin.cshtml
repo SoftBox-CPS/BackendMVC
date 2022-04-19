@@ -1,0 +1,19 @@
+﻿@*if (SignInManager.Is.Signed(User)){
+    <ul>
+        <li class="navbar-nav flex-grow-1">
+            <a class="nav-link-dark" asp-area="" asp-page="/Index"></a>
+        </li>
+
+    </ul>
+}
+else
+{
+    <ul class="navbar-nav d-flex justify-content-end flex-grow-1">
+        <li class="nav-item">
+            <a asp-action="/Login" class="btn btn-primary">Login</a>
+        </li>
+         <li class="nav-item">
+            <a asp-action="/Register" class="btn ">Register</a>
+        </li>
+    </ul>
+}*@

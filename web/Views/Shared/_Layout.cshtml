@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MVCProjectWeb</title>
+    <link rel="stylesheet" href="~/css/bootswatchTheme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MVCProjectWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+
+<body>
+    <header>
+        @*NavBar*@
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+              <a href="https://www.softbox-retailing.ru/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">Softbox</a>
+
+            <div class="navbar-collapse collapse d-flex justify-content-center justify-content-lg-start">
+                
+                <ul class="navbar-nav"> 
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white">About</a>
+                    <li/>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Registration">Регистрация</a>
+                    <li/>
+                </ul>
+            </div>
+            @*кнопочки*@
+            <div class="col-md-3 text-end">
+                <button type="button" class="btn btn-outline-light me-2">Login</button>
+                <button type="button" class="btn btn-outline-light me-2">Registration</button>
+                <partial name="_AccountLogin"/>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted bg-white">
+        <div class="container">
+            &copy; 2022 - Softbox - <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </div>
+        <div class="container">
+            PrivacyPage - <a asp-area="" asp-controller="Privacy" asp-action="Index">Home</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+    crossorigin="anonymous">
+    </script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

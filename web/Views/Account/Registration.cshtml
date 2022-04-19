@@ -1,0 +1,48 @@
+﻿@model UserProfile;
+<h1>Registration</h1>
+
+@*<div class ="row justify-content-center align-items-center"*@
+<a asp-controller="Home" asp-action="Index">Home</a>
+<div class="container =mt-5">
+    
+<form asp-controller="Account" asp-action="Index" method="post">
+    
+    <div>
+        <label>UserName</label>
+        <input asp-for="FIO" />
+        <span asp-validation-for="FIO" class=text-danger></span>
+    </div>
+    <div>
+        <label>Password</label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" class=text-danger></span>
+    </div>
+    <div>
+        <label>Phone</label>
+        <input asp-for="Phone" />
+        <span asp-validation-for="Phone" class=text-danger></span>
+    </div>
+    <div>
+        <label>Title</label>
+        <input asp-for="Title" />
+        <span asp-validation-for="Title" class=text-danger></span>
+    </div>
+    <div>
+        <label>LegalName</label>
+        <input asp-for="LegalName" />
+        <span asp-validation-for="LegalName" class=text-danger></span>
+    </div>
+    <div>
+        <label>UserType</label>
+        <input asp-for="UserType" />
+        <span asp-validation-for="UserType" class=text-danger></span>
+    </div>
+    
+    <p>
+        <button type="submit">Registration</button>
+    </p>
+
+</form>
+</div>
+
+
