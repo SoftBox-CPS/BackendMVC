@@ -1,6 +1,9 @@
+using SoftBox.DataBase.IntarfaceRepository;
+using SoftBox.DataBase.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
 // Add services to the container.
 var MVCbuilder = builder.Services.AddRazorPages();
 
