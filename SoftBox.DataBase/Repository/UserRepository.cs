@@ -1,27 +1,31 @@
-﻿using SoftBox.DataBase.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SoftBox.DataBase.Entities;
 using SoftBox.DataBase.IntarfaceRepository;
 
 namespace SoftBox.DataBase.Repository
 {
-    public class UserRepository : IUserRepository
+    internal class UserRepository : IUserRepository
     {
-        private readonly List<User> _users;
-        private readonly List<UsersType> _userTypes;
-
-        public UserRepository()
+        private readonly DbContextFactory _dbContextFactory;
+        public UserRepository(DbContextFactory dbContextFactory)
         {
-            this._users = new List<User>();
-            this._userTypes = new List<UsersType>();
+            this._dbContextFactory = dbContextFactory;
         }
 
-        public long GetTypeUserById(Guid userId)
+        public async Task<long> GetTypeUserByIdAsync(Guid userId)
         {
-            return _users.Where(c => c.Id == userId).Select(c => c.TypeUserId).FirstOrDefault();
+            var dbContext = _dbContextFactory.Create(typeof(UserRepository));
+
+            return await dbContext.Users.Where(c => c.Id == userId)
+                                  .Select(c => c.TypeUserId)
+                                  .FirstOrDefaultAsync();
         }
 
-        public User GetUserById(Guid userId)
+        public async Task<User> GetUserByIdAsync(Guid userId)
         {
-            return _users.FirstOrDefault(c => c.Id == userId);
+            var dbContext = _dbContextFactory.Create(typeof(UserRepository));
+
+            return await dbContext.Users.FirstOrDefaultAsync(c => c.Id == userId);
         }
     }
 }
