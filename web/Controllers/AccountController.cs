@@ -9,6 +9,8 @@ namespace MVCWebApplication.Controllers
             return View();
         }
 
+        //TODO Validation there 
+
         public IActionResult Registration()
         {
             return View();
