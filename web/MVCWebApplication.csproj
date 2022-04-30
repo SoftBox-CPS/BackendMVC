@@ -18,4 +18,8 @@
     <ProjectReference Include="..\SoftBox.DataBase\SoftBox.DataBase.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataMapper\" />
+  </ItemGroup>
+
 </Project>

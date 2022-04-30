@@ -22,10 +22,10 @@ namespace SoftBox.DataBase.Repository
             //_product.SaveChanges();
         }
 
+        //TODO: не понятно что с этим делать 
         public void EditProduct(Product product)
         {
             var model = _product.First(p => p.Id == product.Id);
-            throw new Exception();
         }
 
         public IEnumerable<Product> GetAll()
