@@ -7,7 +7,7 @@
         public string? Password { get; set; }
         public int Phone { get; set; }
         //UserType
-        public string? UserType { get; set; }
+        public string? UserType { get; set; } // ENUM
         //Organization
         public Guid OrganizationId { get; set; }
         public string? Title { get; set; }

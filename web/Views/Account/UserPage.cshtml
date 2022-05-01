@@ -8,26 +8,22 @@
 <form asp-controller="User" asp-action="Index" method="get">   
    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
-   <!-- if (UserType == User){}  
-        TODO Как достать с формы?
-    --> 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="FIO"></label> //
+        @if (Model.UserType == "User") // ENUM
+        {
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="FIO"></label> //
+                </div>
+                <div class="col-5">
+                    <input type="text" asp-for="UserType" class="form-control" /> //
+                </div>
+                <span class="text-danger" asp-validation-for="Phone"></span> //
             </div>
-            <div class="col-5">
-                <input type="text" asp-for="UserType" class="form-control" /> //
-            </div>
-            <span class="text-danger" asp-validation-for="Phone"></span> //
-        </div>
-
-
-        <!-- else if (UserType == Organization){}
-            TODO Как достать с формы
-        -->
-        
-        <div class="form-group row">
-            <div class="col-2">
+        }
+        else if (Model.UserType == "Org")
+        {
+            <div class="form-group row">
+                <div class="col-2">
                 <label asp-for="Title"></label> //
             </div>
             <div class="col-5">
@@ -35,9 +31,7 @@
             </div>
             <span class="text-danger" asp-validation-for="OrganizationId"></span> //
         </div>
-
-        
-
+        }
 </form>
 </div>
 
