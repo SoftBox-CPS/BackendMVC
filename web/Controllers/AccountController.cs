@@ -18,6 +18,5 @@ namespace MVCWebApplication.Controllers
         {
             return View();
         }
-        // TODO Login & View
     }
 }

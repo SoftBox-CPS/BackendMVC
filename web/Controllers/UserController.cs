@@ -17,5 +17,10 @@ namespace MVCWebApplication.Controllers
             var user = await _userRepository.GetUserByIdAsync(userId);
             return View(user);
         }
+
+        public IActionResult UserProfile()
+        {
+            return View();
+        }
     }
 }
