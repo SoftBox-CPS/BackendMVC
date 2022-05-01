@@ -4,8 +4,8 @@ namespace SoftBox.DataBase.IntarfaceRepository;
 
 public interface IUserRepository
 {
-    public long GetTypeUserById(Guid userId);
+    public Task<long> GetTypeUserByIdAsync(Guid userId);
 
-    public User GetUserById(Guid userId);
+    public Task<User> GetUserByIdAsync(Guid userId);
 
 }

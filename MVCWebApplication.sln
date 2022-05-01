@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{F786DF79-5DF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{C7F63577-3F7D-43EA-BBEC-7295AF778359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftBox.DataBase", "SoftBox.DataBase\SoftBox.DataBase.csproj", "{2F72FFC0-9029-429E-A2E8-97EF475250C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftBox.DataBase", "SoftBox.DataBase\SoftBox.DataBase.csproj", "{2F72FFC0-9029-429E-A2E8-97EF475250C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

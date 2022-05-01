@@ -15,5 +15,11 @@ namespace MVCWebApplication.Controllers
         {
             return View();
         }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+        // TODO Login & View
     }
 }

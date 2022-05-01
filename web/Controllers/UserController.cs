@@ -12,9 +12,9 @@ namespace MVCWebApplication.Controllers
             this._userRepository = userRepository;
         }
 
-        public IActionResult Index(Guid userId)
+        public async Task<IActionResult> Index(Guid userId)
         {
-            var user = _userRepository.GetUserById(userId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
             return View(user);
         }
     }
