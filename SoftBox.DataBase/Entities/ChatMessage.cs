@@ -2,10 +2,8 @@
 
 namespace SoftBox.DataBase.Entities
 {
-    public class ChatMessage
+    public class ChatMessage : Base.Entities<Guid>
     {  
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         public string Message { get; set; }
         [Required]

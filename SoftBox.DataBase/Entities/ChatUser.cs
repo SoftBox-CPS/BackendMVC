@@ -2,14 +2,12 @@
 
 namespace SoftBox.DataBase.Entities
 {
-    public class ChatUser
+    public class ChatUser : Base.Entities<Guid>
     {
         public ChatUser()
         {
             ChatMessages = new HashSet<ChatMessage>();
         }
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         public Guid UserId { get; set; }
         public User User { get; set; }

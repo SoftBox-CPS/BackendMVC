@@ -8,7 +8,7 @@ namespace SoftBox.DataBase
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Chat> Chats { get; set; }
-        public DbSet<ChatUserType> UserTypes { get; set; }
+        public DbSet<ChatUserType> ChatUserTypes { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
@@ -32,6 +32,7 @@ namespace SoftBox.DataBase
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SoftBoxDbContext).Assembly);
 
             BuildModelUsers(modelBuilder);
+            addGenerateGuidToId(modelBuilder);
         }
 
         private static void BuildModelUsers(ModelBuilder modelBuilder)
@@ -58,6 +59,14 @@ namespace SoftBox.DataBase
                 action.Property(dto => dto.TypeUserId);
 
             });
+        }
+
+        private void addGenerateGuidToId(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Entities.Chat>().Property(c => c.Id).HasDefaultValueSql("NEWID()");
+            modelBuilder.Entity<Entities.ChatUser>().Property(c => c.Id).HasDefaultValueSql("NEWID()");
+            modelBuilder.Entity<Entities.ChatMessage>().Property(c => c.Id).HasDefaultValueSql("NEWID()");
+
         }
     }
 }
