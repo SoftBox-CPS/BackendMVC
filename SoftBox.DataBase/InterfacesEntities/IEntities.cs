@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoftBox.DataBase.IntarfaceEntities
+namespace SoftBox.DataBase.InterfacesEntities
 {
     public interface IEntities<T>
     {

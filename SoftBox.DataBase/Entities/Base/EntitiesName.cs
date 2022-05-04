@@ -2,7 +2,7 @@
 
 namespace SoftBox.DataBase.Entities.Base
 {
-    public abstract class EntitiesName<T> : Entities<T>, IntarfaceEntities.INamedEntities<T>
+    public abstract class EntitiesName<T> : Entities<T>, InterfacesEntities.INamedEntities<T>
     {
         [Required]
         [MaxLength(255)]

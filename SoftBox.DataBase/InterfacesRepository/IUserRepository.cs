@@ -1,6 +1,6 @@
 ﻿using SoftBox.DataBase.Entities;
 
-namespace SoftBox.DataBase.IntarfaceRepository;
+namespace SoftBox.DataBase.InterfacesRepository;
 
 public interface IUserRepository
 {
