@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoftBox.DataBase.IntarfaceEntities
 {
-    public interface IEntitiesName<T> : IEntities<T>
+    public interface INamedEntities<T> : IEntities<T>
     {
         string Name { get; set; }
     }
