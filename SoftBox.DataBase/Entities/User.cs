@@ -4,6 +4,10 @@ namespace SoftBox.DataBase.Entities;
 
 public class User : IdentityUser
 {
+    public User()
+    {
+        ChatUsers = new HashSet<ChatUser>();
+    }
     // User Profile
     public Guid Id { get; set; }
     public string? Name { get; set; }
@@ -18,4 +22,7 @@ public class User : IdentityUser
     public string? LegalName { get; set; }
 
     public long TypeUserId { get; set; }
+
+    public ICollection<ChatUser> ChatUsers { get; set; }
+
 }

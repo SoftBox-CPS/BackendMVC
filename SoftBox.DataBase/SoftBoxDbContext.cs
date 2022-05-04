@@ -4,9 +4,14 @@ using SoftBox.DataBase.Entities;
 
 namespace SoftBox.DataBase
 {
-    internal class SoftBoxDbContext : DbContext
+    public class SoftBoxDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<ChatUserType> UserTypes { get; set; }
+        public DbSet<ChatUser> ChatUsers { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+
 
         public SoftBoxDbContext(DbContextOptions<SoftBoxDbContext> options) : base(options)
         {
