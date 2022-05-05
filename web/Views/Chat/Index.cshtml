@@ -1,0 +1,21 @@
+﻿@model IEnumerable<SoftBox.DataBase.Entities.User>
+<h1>Выберите пользователя</h1>
+<table>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <th>
+                    @user.Name
+                </th>
+                <th>
+                    @user.Id
+                </th>
+                <th>
+                    <a asp-action="AllChat" asp-route-id="@user.Id">Выбрать</a>
+                </th>
+
+            </tr>
+        }
+    </tbody>
+</table>

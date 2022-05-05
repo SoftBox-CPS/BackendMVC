@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SoftBox.DataBase.Entities.ChatUser>
+@{
+    var userId = ViewBag.ChatUser.UserId;
+}
+me @userId
+<table>
+    <tbody>
+        <tr>
+            <th>
+                Other
+                <table>
+                    <tbody>
+                        @foreach (var allUser in Model.Where(i => i.UserId != userId))
+                        {
+                            <tr>
+                                <th>
+                                    @allUser.User.Id
+                                </th>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+
+        </tr>
+    </tbody>
+</table>
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">Message</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="sendButton" value="Send Message" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList">
+
+            @{
+                var allMessages = new List<SoftBox.DataBase.Entities.ChatMessage>();
+            }
+            @foreach (var user in Model)
+            {
+                allMessages.AddRange(user.ChatMessages);
+            }
+            @{
+                allMessages.OrderBy(i => i.DateTimeUTCMessage);
+            }
+            @foreach (var message in allMessages)
+            {
+                <li> @message.DateTimeUTCMessage : @message.ChatUser.User.Id says @message.Message </li>
+            }
+
+            </ul>
+    </div>
+</div>
+<script>
+    const chatUserId = "@ViewBag.ChatUser.Id"
+</script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

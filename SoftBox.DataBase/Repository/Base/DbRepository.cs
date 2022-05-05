@@ -4,7 +4,7 @@ namespace SoftBox.DataBase.Repository.Base
 {
     public abstract class DbRepository<T, B> : InterfacesRepository.Base.IRepository<T, B> where T : Entities.Base.Entities<B>, new()
     {
-        private readonly SoftBoxDbContext db;
+        protected readonly SoftBoxDbContext db;
 
         protected DbSet<T> Set { get; }
 
