@@ -8,6 +8,7 @@ namespace SoftBox.DataBase
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Chat> Chats { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<ChatUserType> ChatUserTypes { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
