@@ -2,7 +2,7 @@
 
 namespace SoftBox.DataBase.InterfacesRepository.Base
 {
-    public interface IRepository<T, B> where T : InterfacesEntities.IEntities<B>
+    public interface IRepository<T, B> where T : InterfacesEntities.IEntity<B>
     {
         Task<bool> Exist(T item, CancellationToken cancel = default);
         Task<bool> ExistById(B id, CancellationToken cancel = default);

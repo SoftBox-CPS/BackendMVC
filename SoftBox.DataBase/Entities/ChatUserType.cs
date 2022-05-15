@@ -2,7 +2,7 @@
 
 namespace SoftBox.DataBase.Entities
 {
-    public class ChatUserType : Base.EntitiesName<int>
+    public class ChatUserType : Base.EntityName<int>
     {
         public ChatUserType()
         {

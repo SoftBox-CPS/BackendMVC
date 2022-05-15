@@ -2,7 +2,7 @@
 
 namespace SoftBox.DataBase.Entities
 {
-    public class ChatMessage : Base.Entities<Guid>
+    public class ChatMessage : Base.Entity<Guid>
     {  
         [Required]
         public string Message { get; set; }
