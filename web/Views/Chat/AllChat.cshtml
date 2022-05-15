@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SoftBox.DataBase.Entities.Chat>
+<h1>Выберите чат</h1>
+<table>
+    <tbody>
+        @foreach (var chat in Model)
+        {
+            <tr>
+                <th>
+                    @chat.Name
+                </th>
+                <th>
+                    @chat.Id
+                </th>
+                <th>
+                    @Context.Request.Path
+                    <a asp-action="RedirectToChat" asp-route-id="@chat.Id">Выбрать</a>
+                </th>
+
+            </tr>
+        }
+    </tbody>
+</table>
+

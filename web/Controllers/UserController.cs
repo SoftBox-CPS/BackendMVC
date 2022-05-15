@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoftBox.DataBase.IntarfaceRepository;
+using SoftBox.DataBase.InterfacesRepository;
 
 namespace MVCWebApplication.Controllers
 {

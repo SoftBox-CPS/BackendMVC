@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoftBox.DataBase.Entities;
-using SoftBox.DataBase.IntarfaceRepository;
+using SoftBox.DataBase.InterfacesRepository;
 
 namespace SoftBox.DataBase.Repository
 {
