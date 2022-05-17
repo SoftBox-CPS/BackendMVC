@@ -6,10 +6,10 @@ using System.Linq;
 namespace MVCWebApplication.Controllers;
 
 [Route("[controller]")]
-public class ChatController : Base.EntityController<SoftBox.DataBase.Entities.Chat, Guid>
+public class ChatController : Base.EntityController<SoftBox.DataBase.Entities.Room, Guid>
 {
-    private ChatRepository chatRepository;
-    public ChatController(ChatRepository chatRepository) : base(chatRepository)
+    private RoomRepository chatRepository;
+    public ChatController(RoomRepository chatRepository) : base(chatRepository)
     {
         this.chatRepository = chatRepository;
     }
@@ -38,8 +38,8 @@ public class ChatController : Base.EntityController<SoftBox.DataBase.Entities.Ch
     [HttpGet("RedirectToChat/{userId:Guid}/{chatId:Guid}")]
     public async Task<IActionResult> Chat(Guid userId, Guid chatId)
     {
-        var chat = await chatRepository.GetChatUser(chatId);
-        ViewBag.ChatUser = chat.ChatUsers.FirstOrDefault(i => i.UserId == userId);
-        return base.View((object)chat.ChatUsers);
+        var chat = await chatRepository.GetRoomUser(chatId);
+        ViewBag.ChatUser = chat.RoomUsers.FirstOrDefault(i => i.UserId == userId);
+        return base.View((object)chat.RoomUsers);
     }
 }
