@@ -9,7 +9,7 @@ var connectionString = builder.Configuration.GetConnectionString("SoftBoxMS");
 builder.Services.AddDbContext<SoftBoxDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<ChatRepository>();
+builder.Services.AddScoped<RoomRepository>();
 
 builder.Services.AddSignalR();
 //builder.Services.ConnectEFCoreDB(builder.Configuration);

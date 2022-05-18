@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SoftBox.DataBase.Entities
+namespace SoftBox.DataBase.Entities;
+
+[Table("categories")]
+public class Category : Base.EntityName<int>
 {
-    public class Category
+    public Category()
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Description{ get; set; }
-        public string? ImageUrl{ get; set; }
-        public IEnumerable<Product>? Products { get; set; }
+        ProductCategories = new HashSet<ProductCategory>();
     }
+    [Column("description")]
+    public string? Description{ get; set; }
+    [Column("image_url")]
+    public string? ImageUrl{ get; set; }
+    public ICollection<ProductCategory> ProductCategories { get; set; }
 }

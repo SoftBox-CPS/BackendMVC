@@ -29,7 +29,7 @@ public class ProductList : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Create(Product obj)
     {
-        if (obj.Name == obj.DisplayOrder.ToString())
+        if (obj.Name == obj.Name.ToString())
         {
             ModelState.AddModelError("Customer", "The Display cannot exactly match the Name.");
         }
@@ -61,7 +61,7 @@ public class ProductList : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Edit(Product objProducts)
     {
-        if (objProducts.Name == objProducts.DisplayOrder.ToString())
+        if (objProducts.Name == objProducts.Name.ToString())
         {
             ModelState.AddModelError("Customer", "The Display cannot exactly match the Name.");
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SoftBox.DataBase.Entities.ChatUser>
+﻿@model IEnumerable<SoftBox.DataBase.Entities.RoomUser>
 @{
     var userId = ViewBag.ChatUser.UserId;
 }
@@ -54,18 +54,18 @@ me @userId
         <ul id="messagesList">
 
             @{
-                var allMessages = new List<SoftBox.DataBase.Entities.ChatMessage>();
+                var allMessages = new List<SoftBox.DataBase.Entities.RoomMessage>();
             }
             @foreach (var user in Model)
             {
-                allMessages.AddRange(user.ChatMessages);
+                allMessages.AddRange(user.RoomMessages);
             }
             @{
                 allMessages.OrderBy(i => i.DateTimeUTCMessage);
             }
             @foreach (var message in allMessages)
             {
-                <li> @message.DateTimeUTCMessage : @message.ChatUser.User.Id says @message.Message </li>
+                <li> @message.DateTimeUTCMessage : @message.RoomUser.User.Id says @message.Message </li>
             }
 
             </ul>
