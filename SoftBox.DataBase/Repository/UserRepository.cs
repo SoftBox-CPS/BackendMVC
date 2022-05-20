@@ -15,6 +15,12 @@ public class UserRepository : Base.DbRepository<User, Guid>, IUserRepository
         return await Set.Where(x => x.Login == login).AnyAsync();
     }
 
+    public async Task<User> GetUserByLogin(string login)
+    {
+        return await Set.Include(x => x.UserType)
+            .FirstOrDefaultAsync(x => x.Login == login);
+    }
+
     public async Task<int> GetTypeUserByIdAsync(Guid userId)
     {
 

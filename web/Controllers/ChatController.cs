@@ -2,11 +2,13 @@
 using SoftBox.DataBase.Repository;
 using SoftBox.DataBase.Entities;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVCWebApplication.Controllers;
 
 [Route("[controller]")]
-public class ChatController : Base.EntityController<SoftBox.DataBase.Entities.Room, Guid>
+[Authorize]
+public class ChatController : Base.EntityController<Room, Guid>
 {
     private RoomRepository chatRepository;
     public ChatController(RoomRepository chatRepository) : base(chatRepository)
