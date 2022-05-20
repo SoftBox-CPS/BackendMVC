@@ -1,58 +1,81 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MVCWebApplication.Models;
 using SoftBox.DataBase.Entities;
+using SoftBox.DataBase.InterfacesRepository;
 
-namespace MVCWebApplication.Controllers
+namespace MVCWebApplication.Controllers;
+
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    private readonly IUserRepository userRepository;
+
+    public AccountController(IUserRepository userRepository)
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        public AccountController(
-            RoleManager<IdentityRole> roleManager,
-            SignInManager<User> signInManager,
-            UserManager<User> userManager)
-        {
-            _roleManager = roleManager;
-            _signInManager = signInManager;
-            _userManager = userManager;
-        }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        //TODO Validation there 
-
-        public IActionResult Registration()
-        {
-            return View();
-        }
-
-        public IActionResult Login(string returnUrl = "/")
-        {
-            if (_signInManager.IsSignedIn(User))
-            {
-                return RedirectToAction("Index","Home");
-            }
-            returnUrl = returnUrl.Replace("%2F", "/");
-
-            var model = new UserLogin
-            {
-                ReturnUrl = returnUrl
-            };
-            
-            return View(model);
-        }
-
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
-
-
+        this.userRepository = userRepository;
     }
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+
+    [HttpGet]
+    public IActionResult Registration()
+    {
+        return View();
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Registration(UserRegistration user, string? returnUrl)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View();
+        }
+        
+        if (await userRepository.IsLoginExist(user.Login))
+        {
+            ModelState.AddModelError("Login", "Уже существует.");
+            return View();
+        }
+        await userRepository.Add(new User()
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            Login = user.Login,
+            Patronymic = user.Patronymic,
+            Phone = user.Phone,
+            UserTypeId = 1,
+            PasswordHash = BCrypt.Net.BCrypt.HashString(user.Password)
+        });
+        if (String.IsNullOrEmpty(returnUrl))
+        {
+            return RedirectToAction("Index", "Home");
+        }
+        else
+        {
+            return Redirect(returnUrl);
+        }
+    }
+    [HttpGet]
+    public IActionResult Login()
+    {
+
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Login(User user, string returnUrl)
+    {
+
+        return Ok(user);
+    }
+
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
+
+
 }

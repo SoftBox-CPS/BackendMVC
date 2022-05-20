@@ -2,9 +2,12 @@
 
 namespace SoftBox.DataBase.InterfacesRepository;
 
-public interface IUserRepository
+public interface IUserRepository : Base.IRepository<User, Guid>
 {
-    public Task<long> GetTypeUserByIdAsync(Guid userId);
+
+    public Task<bool> IsLoginExist(string login);
+
+    public Task<int> GetTypeUserByIdAsync(Guid userId);
 
     public Task<User> GetUserByIdAsync(Guid userId);
 
