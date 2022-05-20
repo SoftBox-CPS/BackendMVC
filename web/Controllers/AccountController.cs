@@ -51,7 +51,7 @@ public class AccountController : Controller
             Patronymic = userRegistration.Patronymic,
             Phone = userRegistration.Phone,
             UserTypeId = 1,
-            PasswordHash = BCrypt.Net.BCrypt.HashString(userRegistration.Password)
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(userRegistration.Password)
         });
         if (String.IsNullOrEmpty(user.Id.ToString()) 
             || ! await Authenticate( new UserLogin()
@@ -129,6 +129,7 @@ public class AccountController : Controller
         var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                new Claim("id", user.Id.ToString()),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.UserType?.Name)
             };
 

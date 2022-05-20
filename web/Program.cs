@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = new PathString("/Account/AccessDenied");
     });
 
-builder.Services.AddScoped<RoomRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddSignalR();

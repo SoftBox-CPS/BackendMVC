@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoftBox.DataBase.Repository;
 using SoftBox.DataBase.Entities;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using SoftBox.DataBase.InterfacesRepository;
 
 namespace MVCWebApplication.Controllers;
 
@@ -10,38 +10,24 @@ namespace MVCWebApplication.Controllers;
 [Authorize]
 public class ChatController : Base.EntityController<Room, Guid>
 {
-    private RoomRepository chatRepository;
-    public ChatController(RoomRepository chatRepository) : base(chatRepository)
+    private IRoomRepository chatRepository;
+    public ChatController(IRoomRepository chatRepository) : base(chatRepository)
     {
         this.chatRepository = chatRepository;
     }
-    [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var users = await chatRepository.GetAllUser();
-        return View(users);
-    }
 
-    [HttpGet("AllChat")]
-    public async Task<IActionResult> AllChat(Guid user)
+    [HttpGet]
+    public async Task<IActionResult> AllChat()
     {
-        var chats = await repository.GetAll();
+        var chats = await chatRepository.GetRoomByUserId(User.Claims.First(x => x.Type == "id").Value);
         return View(chats);
     }
 
-    [HttpGet("RedirectToChat/{chat:Guid}")]
-    public IActionResult RedirectToChat(Guid chat)
-    {
-        var refURL = Request.Headers["Referer"].ToString();
-        var userId = new Uri(refURL).Query.Split('=')[1];
-
-        return Redirect($"{userId}/{chat}");
-    }
-    [HttpGet("RedirectToChat/{userId:Guid}/{chatId:Guid}")]
-    public async Task<IActionResult> Chat(Guid userId, Guid chatId)
+    [HttpGet("{chatId:Guid}")]
+    public async Task<IActionResult> Chat(Guid chatId)
     {
         var chat = await chatRepository.GetRoomUser(chatId);
-        ViewBag.ChatUser = chat.RoomUsers.FirstOrDefault(i => i.UserId == userId);
-        return base.View((object)chat.RoomUsers);
+        ViewBag.ChatUser = chat.RoomUsers.FirstOrDefault(i => i.UserId.ToString() == User.Claims.First(x => x.Type == "id").Value);
+        return base.View(chat.RoomUsers);
     }
 }
