@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SoftBox.DataBase;
 using SoftBox.DataBase.InterfacesRepository;
@@ -9,7 +10,15 @@ var connectionString = builder.Configuration.GetConnectionString("SoftBoxMS");
 builder.Services.AddDbContext<SoftBoxDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<RoomRepository>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+                {
+        options.LoginPath = new PathString("/Account/Login");
+        options.AccessDeniedPath = new PathString("/Account/AccessDenied");
+    });
+
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddSignalR();
 //builder.Services.ConnectEFCoreDB(builder.Configuration);
@@ -32,6 +41,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

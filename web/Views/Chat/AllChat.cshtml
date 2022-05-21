@@ -13,7 +13,7 @@
                 </th>
                 <th>
                     @Context.Request.Path
-                    <a asp-action="RedirectToChat" asp-route-id="@chat.Id">Выбрать</a>
+                    <a asp-action="Chat" asp-controller="Chat" asp-route-chatId="@chat.Id">Выбрать</a>
                 </th>
 
             </tr>

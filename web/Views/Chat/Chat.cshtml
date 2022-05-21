@@ -60,10 +60,7 @@ me @userId
             {
                 allMessages.AddRange(user.RoomMessages);
             }
-            @{
-                allMessages.OrderBy(i => i.DateTimeUTCMessage);
-            }
-            @foreach (var message in allMessages)
+            @foreach (var message in allMessages.OrderBy(i => i.DateTimeUTCMessage))
             {
                 <li> @message.DateTimeUTCMessage : @message.RoomUser.User.Id says @message.Message </li>
             }
