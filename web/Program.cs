@@ -10,6 +10,9 @@ var connectionString = builder.Configuration.GetConnectionString("SoftBoxMS");
 builder.Services.AddDbContext<SoftBoxDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
                 {
@@ -17,11 +20,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = new PathString("/Account/AccessDenied");
     });
 
-builder.Services.AddScoped<IRoomRepository, RoomRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddSignalR();
-//builder.Services.ConnectEFCoreDB(builder.Configuration);
 
 // Add services to the container.
 var MVCbuilder = builder.Services.AddRazorPages();
