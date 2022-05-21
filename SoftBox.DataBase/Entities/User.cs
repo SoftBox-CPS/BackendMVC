@@ -1,14 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SoftBox.DataBase.Entities;
 
 [Table("users")]
+[Index(nameof(Login), IsUnique = true)]
 public class User : Base.Entity<Guid>
 {
     public User()
     {
-        ChatUsers = new HashSet<RoomUser>();
+        RoomUsers = new HashSet<RoomUser>();
         UserOrganizations = new HashSet<UserOrganization>();
     }
     [Required]
@@ -42,7 +44,7 @@ public class User : Base.Entity<Guid>
     public int UserTypeId { get; set; }
     public UserType UserType { get; set; }
 
-    public ICollection<RoomUser> ChatUsers { get; set; }
+    public ICollection<RoomUser> RoomUsers { get; set; }
     public ICollection<UserOrganization> UserOrganizations { get; set; }
 
 }
