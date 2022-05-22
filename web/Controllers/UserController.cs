@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoftBox.DataBase.IntarfaceRepository;
+using SoftBox.DataBase.InterfacesRepository;
 
 namespace MVCWebApplication.Controllers
 {
-    public class UserController : Controller
+    public class UserController : Base.EntityController<SoftBox.DataBase.Entities.User, Guid>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepository userRepository;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository): base(userRepository)
         {
-            this._userRepository = userRepository;
+            this.userRepository = userRepository;
         }
 
         public async Task<IActionResult> Index(Guid userId)
         {
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await userRepository.GetUserByIdAsync(userId);
             return View(user);
         }
 

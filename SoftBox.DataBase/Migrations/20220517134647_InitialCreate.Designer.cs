@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftBox.DataBase;
 
@@ -11,13 +12,14 @@ using SoftBox.DataBase;
 namespace SoftBox.DataBase.Migrations
 {
     [DbContext(typeof(SoftBoxDbContext))]
-    partial class SoftBoxDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517134647_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -302,7 +304,7 @@ namespace SoftBox.DataBase.Migrations
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("login");
 
                     b.Property<string>("PasswordHash")
@@ -325,9 +327,6 @@ namespace SoftBox.DataBase.Migrations
                         .HasColumnName("user_type_id");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Login")
-                        .IsUnique();
 
                     b.HasIndex("UserTypeId");
 
@@ -488,7 +487,7 @@ namespace SoftBox.DataBase.Migrations
                         .IsRequired();
 
                     b.HasOne("SoftBox.DataBase.Entities.User", "User")
-                        .WithMany("RoomUsers")
+                        .WithMany("ChatUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -575,7 +574,7 @@ namespace SoftBox.DataBase.Migrations
 
             modelBuilder.Entity("SoftBox.DataBase.Entities.User", b =>
                 {
-                    b.Navigation("RoomUsers");
+                    b.Navigation("ChatUsers");
 
                     b.Navigation("UserOrganizations");
                 });

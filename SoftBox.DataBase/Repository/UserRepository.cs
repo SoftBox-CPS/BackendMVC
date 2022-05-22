@@ -1,31 +1,37 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoftBox.DataBase.Entities;
-using SoftBox.DataBase.IntarfaceRepository;
+using SoftBox.DataBase.InterfacesRepository;
 
-namespace SoftBox.DataBase.Repository
+namespace SoftBox.DataBase.Repository;
+
+public class UserRepository : Base.DbRepository<User, Guid>, IUserRepository
 {
-    internal class UserRepository : IUserRepository
+    public UserRepository(SoftBoxDbContext db) : base(db)
     {
-        private readonly DbContextFactory _dbContextFactory;
-        public UserRepository(DbContextFactory dbContextFactory)
-        {
-            this._dbContextFactory = dbContextFactory;
-        }
+    }
 
-        public async Task<long> GetTypeUserByIdAsync(Guid userId)
-        {
-            var dbContext = _dbContextFactory.Create(typeof(UserRepository));
+    public async Task<bool> IsLoginExist(string login)
+    {
+        return await Set.Where(x => x.Login == login).AnyAsync();
+    }
 
-            return await dbContext.Users.Where(c => c.Id == userId)
-                                  .Select(c => c.TypeUserId)
-                                  .FirstOrDefaultAsync();
-        }
+    public async Task<User> GetUserByLogin(string login)
+    {
+        return await Set.Include(x => x.UserType)
+            .FirstOrDefaultAsync(x => x.Login == login);
+    }
 
-        public async Task<User> GetUserByIdAsync(Guid userId)
-        {
-            var dbContext = _dbContextFactory.Create(typeof(UserRepository));
+    public async Task<int> GetTypeUserByIdAsync(Guid userId)
+    {
 
-            return await dbContext.Users.FirstOrDefaultAsync(c => c.Id == userId);
-        }
+        return await Set.Where(c => c.Id == userId)
+                              .Select(c => c.UserTypeId)
+                              .FirstOrDefaultAsync();
+    }
+
+    public async Task<User> GetUserByIdAsync(Guid userId)
+    {
+
+        return await GetById(userId);
     }
 }

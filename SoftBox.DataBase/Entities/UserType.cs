@@ -1,8 +1,14 @@
-﻿namespace SoftBox.DataBase.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-internal class UsersType
-{
-    public long Id { get; set; }
+namespace SoftBox.DataBase.Entities;
 
-    public string? Name { get; set; }
+[Table("user_types")]
+public class UserType : Base.EntityName<int>
+{ 
+    public UserType()
+    {
+        Users = new HashSet<User>();
+    }
+
+    public virtual ICollection<User> Users { get; set; }
 }

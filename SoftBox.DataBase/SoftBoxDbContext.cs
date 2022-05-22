@@ -1,58 +1,46 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SoftBox.DataBase.Entities;
 
-namespace SoftBox.DataBase
+namespace SoftBox.DataBase;
+
+public class SoftBoxDbContext : DbContext
 {
-    internal class SoftBoxDbContext : DbContext
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserType> UserTypes { get; set; }
+    public DbSet<Organization> Organizations { get; set; }
+    public DbSet<UserOrganization> UserOrganizations { get; set; }
+    public DbSet<UserOrganizationType> UserOrganizationTypes { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<ProductCategory> ProductCategories { get; set; }
+    public DbSet<OrganizationProduct> OrganizationsProducts { get; set; }
+    public DbSet<Room> Rooms { get; set; }
+    public DbSet<RoomUser> RoomUsers { get; set; }
+    public DbSet<RoomUserType> RoomUserTypes { get; set; }
+    public DbSet<RoomMessage> RoomMessages { get; set; }
+
+
+    public SoftBoxDbContext(DbContextOptions<SoftBoxDbContext> options) : base(options)
     {
-        public DbSet<User> Users { get; set; }
-
-        public SoftBoxDbContext(DbContextOptions<SoftBoxDbContext> options) : base(options)
-        {
-        }
-
-        private static readonly ValueComparer DictionaryComparer =
-           new ValueComparer<Dictionary<string, string>>(
-               (dictionary1, dictionary2) => dictionary1.SequenceEqual(dictionary2),
-               dictionary => dictionary.Aggregate(
-                   0,
-                   (a, p) => HashCode.Combine(HashCode.Combine(a, p.Key.GetHashCode()), p.Value.GetHashCode())
-               )
-           );
-
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SoftBoxDbContext).Assembly);
-
-            BuildModelUsers(modelBuilder);
-        }
-
-        private static void BuildModelUsers(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<User>(action =>
-            {
-                action.ToTable("Users");
-                action.HasKey(c => c.Id);
-                action.Property(dto => dto.Id).HasDefaultValueSql("NEWID()");
-                action.Property(dto => dto.Name)
-                        .HasMaxLength(50)
-                        .IsRequired();
-
-                action.Property(dto => dto.LegalName)
-                        .HasMaxLength(50);
-
-                action.Property(dto => dto.Surname)
-                        .IsRequired();
-
-                action.Property(dto => dto.Patronymic);
-                action.Property(dto => dto.Phone);
-                action.Property(dto => dto.OrganizationId);
-                action.Property(dto => dto.Password);
-                action.Property(dto => dto.TypeUserId);
-
-            });
-        }
     }
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(SoftBoxDbContext).Assembly);
+
+        addGenerateGuidToId(modelBuilder);
+    }
+
+    private void addGenerateGuidToId(ModelBuilder modelBuilder)
+    {
+        foreach (var entity in modelBuilder.Model.GetEntityTypes()
+            .Where(e => typeof(Entities.Base.Entity<Guid>).IsAssignableFrom(e.ClrType))
+            .Select(m => modelBuilder.Entity(m.ClrType)))
+        {
+            entity.Property(nameof(Entities.Base.Entity<Guid>.Id)).HasDefaultValueSql("NEWID()");
+        }
+
+    }
+
 }

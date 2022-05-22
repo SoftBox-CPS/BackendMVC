@@ -1,21 +1,50 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SoftBox.DataBase.Entities;
 
-public class User : IdentityUser
+[Table("users")]
+[Index(nameof(Login), IsUnique = true)]
+public class User : Base.Entity<Guid>
 {
-    // User Profile
-    public Guid Id { get; set; }
-    public string? Name { get; set; }
-    public string? Surname { get; set; }
+    public User()
+    {
+        RoomUsers = new HashSet<RoomUser>();
+        UserOrganizations = new HashSet<UserOrganization>();
+    }
+    [Required]
+    [Column("login")]
+    public string Login { get; set; }
+    [Required]
+    [Column("password_hash")]
+    public string PasswordHash { get; set; }
+
+    [Required]
+    [Column("first_name")]
+    public string FirstName { get; set; }
+    [Required]
+    [Column("last_name")]
+    public string LastName { get; set; }
+    [Column("patronymic")]
     public string? Patronymic { get; set; }
-    public string? Password { get; set; }
-    public string? Phone { get; set; }
 
-    //Organization
-    public Guid OrganizationId { get; set; }
-    public string? Title { get; set; }
-    public string? LegalName { get; set; }
+    [Required]
+    [Column("phone")]
+    [MaxLength(20)]
+    public string Phone { get; set; }
+    [Required]
+    [Column("email")]
+    [MaxLength(254)]
+    public string Email { get; set; }
 
-    public long TypeUserId { get; set; }
+    [Required]
+    [Column("user_type_id")]
+    [ForeignKey(nameof(UserType))]
+    public int UserTypeId { get; set; }
+    public UserType UserType { get; set; }
+
+    public ICollection<RoomUser> RoomUsers { get; set; }
+    public ICollection<UserOrganization> UserOrganizations { get; set; }
+
 }
