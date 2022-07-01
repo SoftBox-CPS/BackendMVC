@@ -31,31 +31,26 @@
                         <a class="nav-link text-white" asp-area="" asp-controller="Chat" asp-action="Index">Chat</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Registration">Регистрация</a>
-                    <li />
-
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Войти</a>
-                    <li />
-
                     <!--TODO а где это должно быть? Заместо войти должна быть страница пользователя-->
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                     <li>
-                                         <a asp-controller="Account" asp-action="Logout" class="nav-link text-white">Выйти</a>
-                                     </li>
-                                }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                        <li>
+                            <a asp-controller="Account" asp-action="Logout" class="nav-link text-white">Выйти</a>
+                        </li>
+                        }
+                        else
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Registration">Регистрация</a>
+                        </li>
+                        }
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="UserProfile">Моя страница</a>
                     <li />
                 </ul>
-            </div>
-            @*кнопочки*@
-            <div class="col-md-3 text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-outline-light me-2">Registration</button>
-                <partial name="_AccountLogin" />
             </div>
         </nav>
     </header>

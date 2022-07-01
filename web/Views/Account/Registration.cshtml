@@ -1,7 +1,4 @@
 ﻿@model UserRegistration;
-@{
-    string? returnUrl = @Context.Request.Query["returnurl"];
-}
 
 <h1>Registration</h1>
 
@@ -9,7 +6,7 @@
 <a asp-controller="Home" asp-action="Index">Home</a>
 <div class="container =mt-5">
 
-    <form asp-controller="Account" asp-action="Registration" asp-route-returnurl="@returnUrl" method="post" asp-anti-forgery="true">
+    <form asp-controller="Account" asp-action="Registration" method="post" asp-anti-forgery="true">
 
         <div>
             <label>Login</label>
