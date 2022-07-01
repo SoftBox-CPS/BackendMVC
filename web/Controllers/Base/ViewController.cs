@@ -2,7 +2,7 @@
 
 namespace MVCWebApplication.Controllers.Base;
 
-public class ViewController : Controller
+public abstract class ViewController : Controller
 {
     public bool IsView()
     {
