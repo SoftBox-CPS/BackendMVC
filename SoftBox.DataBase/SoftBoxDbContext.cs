@@ -13,7 +13,6 @@ public class SoftBoxDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
-    public DbSet<OrganizationProduct> OrganizationsProducts { get; set; }
     public DbSet<Room> Rooms { get; set; }
     public DbSet<RoomUser> RoomUsers { get; set; }
     public DbSet<RoomUserType> RoomUserTypes { get; set; }

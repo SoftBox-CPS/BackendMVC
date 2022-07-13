@@ -12,10 +12,10 @@ public class Room : Base.EntityName<Guid>
     }
 
     [Required]
-    [Column("organization_product_id")]
-    [ForeignKey(nameof(OrganizationProduct))]
-    public Guid OrganizationProductId { get; set; }
-    public OrganizationProduct OrganizationProduct { get; set; }
+    [Column("product_id")]
+    [ForeignKey(nameof(Product))]
+    public Guid ProductId { get; set; }
+    public Product Product { get; set; }
 
     [Required]
     [Column("amount_product")]

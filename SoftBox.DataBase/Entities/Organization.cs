@@ -9,7 +9,9 @@ public class Organization : Base.EntityName<Guid>
     public Organization()
     {
         UserOrganizations = new HashSet<UserOrganization>();
+        Products = new HashSet<Product>();
     }
 
     public ICollection<UserOrganization> UserOrganizations { get; set; }
+    public ICollection<Product> Products { get; set; }
 }

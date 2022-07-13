@@ -15,12 +15,12 @@ public class RoomRepository : Base.DbNamedRepository<Room, Guid>, InterfacesRepo
     }
 
     public async Task<IEnumerable<Room>> GetRoomByUserId(string userId)
-    { 
+    {
         return await db.Set<Entities.RoomUser>()
             .Include(x => x.Room)
             .Where(x => x.UserId.ToString() == userId)
             .Select(x => x.Room)
-            .ToListAsync(); ;
+            .ToListAsync();
     }
 
     public async Task<RoomMessage> AddRoomMessage(RoomMessage item, CancellationToken cancel = default)
@@ -42,7 +42,7 @@ public class RoomRepository : Base.DbNamedRepository<Room, Guid>, InterfacesRepo
             .ThenInclude(x => x.RoomMessages)
             .Include(x => x.RoomUsers)
             .ThenInclude(x => x.User)
-                            .FirstOrDefaultAsync(c => c.Id == roomId, cancel)
+            .FirstOrDefaultAsync(c => c.Id == roomId, cancel)
             .ConfigureAwait(false);
     }
 }

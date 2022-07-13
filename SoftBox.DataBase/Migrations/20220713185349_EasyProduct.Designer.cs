@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftBox.DataBase;
 
@@ -11,9 +12,10 @@ using SoftBox.DataBase;
 namespace SoftBox.DataBase.Migrations
 {
     [DbContext(typeof(SoftBoxDbContext))]
-    partial class SoftBoxDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220713185349_EasyProduct")]
+    partial class EasyProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
