@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace MVCWebApplication.Controllers;
 
-public class AccountController : Controller
+public class AccountController : Base.ViewController
 {
     private readonly IUserRepository userRepository;
 
@@ -17,31 +17,29 @@ public class AccountController : Controller
     {
         this.userRepository = userRepository;
     }
-    public IActionResult Index()
-    {
-        return View();
-    }
 
 
     [HttpGet]
+    [AllowAnonymous]
     public IActionResult Registration()
     {
         return View();
     }
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Registration(UserRegistration userRegistration, string? returnUrl)
+    [AllowAnonymous]
+    public async Task<IActionResult> Registration(UserRegistration userRegistration)
     {
         if (!ModelState.IsValid)
         {
-            return View();
+            return View(BadRequest, modelState: ModelState);
         }
 
         if (await userRepository.IsLoginExist(userRegistration.Login))
         {
             ModelState.AddModelError("Login", "Уже существует.");
-            return View();
+            return View(BadRequest, modelState: ModelState);
         }
+
         var user = await userRepository.Add(new User()
         {
             FirstName = userRegistration.FirstName,
@@ -53,8 +51,9 @@ public class AccountController : Controller
             UserTypeId = 1,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(userRegistration.Password)
         });
-        if (String.IsNullOrEmpty(user.Id.ToString()) 
-            || ! await Authenticate( new UserLogin()
+
+        if (String.IsNullOrEmpty(user.Id.ToString())
+            || !await Authenticate(new UserLogin()
             {
                 Login = userRegistration.Login,
                 Password = userRegistration.Password
@@ -62,17 +61,16 @@ public class AccountController : Controller
             ))
         {
             ModelState.AddModelError("Login", "Произошла непридвиденная ошибка. Повторите запрос позднее");
-            return View();
+            //Replace on 500
+            return View(BadRequest, modelState: ModelState);
+        }
+        if (!IsView())
+        {
+            return Ok("ok");
         }
 
-        if (String.IsNullOrEmpty(returnUrl))
-        {
-            return RedirectToAction("Index", "Home");
-        }
-        else
-        {
-            return Redirect(returnUrl);
-        }
+        return RedirectToAction("Index", "Home");
+
     }
     [HttpGet]
     [AllowAnonymous]
@@ -82,19 +80,26 @@ public class AccountController : Controller
         return View();
     }
 
+
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> Login(UserLogin userLogin, string? returnUrl)
     {
         if (!ModelState.IsValid)
         {
-            return View();
+            return View(Unauthorized, modelState: ModelState);
         }
 
         if (!await Authenticate(userLogin))
         {
             ModelState.AddModelError("Login", "Некорректные логин и(или) пароль");
-            return View();
+            return this.View(Unauthorized, modelState: ModelState);
+
+        }
+
+        if (!IsView())
+        {
+            return Ok("ok");
         }
 
         if (String.IsNullOrEmpty(returnUrl))
@@ -105,8 +110,11 @@ public class AccountController : Controller
         {
             return Redirect(returnUrl);
         }
+
     }
 
+
+    [Authorize]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -122,7 +130,7 @@ public class AccountController : Controller
     {
         var user = await userRepository.GetUserByLogin(userLogin.Login);
         if (user == null
-            || ! BCrypt.Net.BCrypt.Verify(userLogin.Password, user.PasswordHash))
+            || !BCrypt.Net.BCrypt.Verify(userLogin.Password, user.PasswordHash))
         {
             return false;
         }

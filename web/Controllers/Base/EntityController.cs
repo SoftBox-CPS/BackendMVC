@@ -2,7 +2,7 @@
 
 namespace MVCWebApplication.Controllers.Base;
 
-public abstract class EntityController<T, B> : Controller where T : SoftBox.DataBase.InterfacesEntities.IEntity<B>
+public abstract class EntityController<T, B> : ViewController where T : SoftBox.DataBase.InterfacesEntities.IEntity<B>
 {
     protected readonly SoftBox.DataBase.InterfacesRepository.Base.IRepository<T, B> repository;
 
