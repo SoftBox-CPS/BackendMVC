@@ -26,6 +26,16 @@ public class Room : Base.EntityName<Guid>
 
     [Column("description")]
     public string? Description { get; set; }
+    
+    [Required]
+    [Column("expiration_date", TypeName = "date")]
+    public DateTime ExpirationDate { get; set; }
+    
+    [Required]
+    [Column("room_status")]
+    [ForeignKey(nameof(RoomStatus))]
+    public string RoomStatusId { get; set; }
+    public RoomStatus RoomStatus { get; set; }
     public ICollection<RoomUser> RoomUsers { get; set; }
 
 }
