@@ -2,12 +2,8 @@
 
 namespace SoftBox.DataBase.InterfacesRepository;
 
-public interface IProductRepository
+public interface IProductRepository : Base.IRepository<Product, Guid>
 {
-    IEnumerable<Product> GetAll();
-    IEnumerable<Product> GetProductsByCategoryId(int id);
-    Product GetById(Guid id);
-    void NewProduct(Product product);
-    void EditProduct(Product product);
-    void DeleteProduct(Guid id);
+    public Task<IEnumerable<Product>> GetProductByOrganizationId(string organizationId);
+    public Task<Product> AddProduct(Product product, CancellationToken cancel = default);
 }

@@ -1,47 +1,29 @@
-﻿using SoftBox.DataBase.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SoftBox.DataBase.Entities;
 using SoftBox.DataBase.InterfacesRepository;
 
 namespace SoftBox.DataBase.Repository;
 
-public class ProductRepository : IProductRepository 
+public class ProductRepository : Base.DbRepository<Product, Guid>, IProductRepository
 {
-    private readonly List<Product> _product;
-    public ProductRepository()
+    public ProductRepository(SoftBoxDbContext db) : base(db)
+    { }
+
+    public async Task<Product> AddProduct(Product product, CancellationToken cancel = default)
     {
-        this._product = new List<Product>();
+        if (product is null) throw new ArgumentNullException(nameof(product));
+
+        await db.AddAsync(product, cancel).ConfigureAwait(false);
+        await db.SaveChangesAsync(cancel).ConfigureAwait(false);
+        return product;
     }
 
-    public void DeleteProduct(Guid id)
-    {
-        var product = GetById(id);
-        if(product == null)
-        {
-            throw new ArgumentException();
-        }
-        _product.Remove(product);
-        //_product.SaveChanges();
-    }
 
-    //TODO: не понятно что с этим делать 
-    public void EditProduct(Product product)
+    public async Task<IEnumerable<Product>> GetProductByOrganizationId(string organizationId)
     {
-        var model = _product.First(p => p.Id == product.Id);
-    }
-
-    public IEnumerable<Product> GetAll()
-    {
-        return _product.ToList();
-    }
-
-    public Product GetById(Guid id) => GetAll().FirstOrDefault(p => p.Id == id);
-
-    public IEnumerable<Product> GetProductsByCategoryId(int id)
-    {
-        return GetAll();
-    }
-
-    public void NewProduct(Product product)
-    {
-        _product.Add(product);
+        return await db.Set<Product>()
+            .Include(x => x.OrganizationId.ToString() == organizationId)
+            .Select(x => new Product())
+            .ToArrayAsync();
     }
 }
