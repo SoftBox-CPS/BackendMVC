@@ -148,6 +148,10 @@ namespace SoftBox.DataBase.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("date")
+                        .HasColumnName("expiration_date");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -162,9 +166,15 @@ namespace SoftBox.DataBase.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("product_id");
 
+                    b.Property<int>("RoomStatusId")
+                        .HasColumnType("int")
+                        .HasColumnName("room_status_id");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("RoomStatusId");
 
                     b.ToTable("rooms");
                 });
@@ -194,6 +204,26 @@ namespace SoftBox.DataBase.Migrations
                     b.HasIndex("RoomUserId");
 
                     b.ToTable("room_messages");
+                });
+
+            modelBuilder.Entity("SoftBox.DataBase.Entities.RoomStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("room_statuses");
                 });
 
             modelBuilder.Entity("SoftBox.DataBase.Entities.RoomUser", b =>
@@ -427,7 +457,15 @@ namespace SoftBox.DataBase.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SoftBox.DataBase.Entities.RoomStatus", "RoomStatus")
+                        .WithMany("Rooms")
+                        .HasForeignKey("RoomStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Product");
+
+                    b.Navigation("RoomStatus");
                 });
 
             modelBuilder.Entity("SoftBox.DataBase.Entities.RoomMessage", b =>
@@ -528,6 +566,11 @@ namespace SoftBox.DataBase.Migrations
             modelBuilder.Entity("SoftBox.DataBase.Entities.Room", b =>
                 {
                     b.Navigation("RoomUsers");
+                });
+
+            modelBuilder.Entity("SoftBox.DataBase.Entities.RoomStatus", b =>
+                {
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("SoftBox.DataBase.Entities.RoomUser", b =>
