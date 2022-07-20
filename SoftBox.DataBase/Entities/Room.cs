@@ -32,7 +32,7 @@ public class Room : Base.EntityName<Guid>
     public DateTime ExpirationDate { get; set; }
     
     [Required]
-    [Column("room_status")]
+    [Column("room_status_id")]
     [ForeignKey(nameof(RoomStatus))]
     public int RoomStatusId { get; set; }
     public RoomStatus RoomStatus { get; set; }

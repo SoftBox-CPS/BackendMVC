@@ -3,9 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SoftBox.DataBase.Entities;
 
-[Table("room_status")]
-public class RoomStatus : Base.Entity<int>
+[Table("room_statuses")]
+public class RoomStatus : Base.EntityName<int>
 {
-    public string Title { get; set; }
+    public RoomStatus()
+    {
+        Rooms = new HashSet<Room>();
+    }
     public ICollection<Room> Rooms { get; set; }
 }
