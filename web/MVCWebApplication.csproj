@@ -23,4 +23,9 @@
     <ProjectReference Include="..\SoftBox.DataBase\SoftBox.DataBase.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\ProductList\" />
+    <Folder Include="Views\RoomList\" />
+  </ItemGroup>
+
 </Project>

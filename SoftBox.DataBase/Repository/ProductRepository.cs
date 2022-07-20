@@ -4,26 +4,16 @@ using SoftBox.DataBase.InterfacesRepository;
 
 namespace SoftBox.DataBase.Repository;
 
-public class ProductRepository : Base.DbRepository<Product, Guid>, IProductRepository
+public class ProductRepository : Base.DbNamedRepository<Product, Guid>, IProductRepository
 {
     public ProductRepository(SoftBoxDbContext db) : base(db)
     { }
 
-    public async Task<Product> AddProduct(Product product, CancellationToken cancel = default)
-    {
-        if (product is null) throw new ArgumentNullException(nameof(product));
-
-        await db.AddAsync(product, cancel).ConfigureAwait(false);
-        await db.SaveChangesAsync(cancel).ConfigureAwait(false);
-        return product;
-    }
-
-
-    public async Task<IEnumerable<Product>> GetProductByOrganizationId(string organizationId)
+    public async Task<IEnumerable<Product>> GetProductByOrganizationName(string organizationName)
     {
         return await db.Set<Product>()
-            .Include(x => x.OrganizationId.ToString() == organizationId)
-            .Select(x => new Product())
+            .Include(x => x.Organization)
+            .Where(x => x.Organization.Name == organizationName)
             .ToArrayAsync();
     }
 }

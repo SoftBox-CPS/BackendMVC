@@ -6,7 +6,7 @@ using SoftBox.DataBase.InterfacesRepository;
 namespace MVCWebApplication.Controllers;
 
 [Authorize]
-public class ProductListController : Base.EntityController<Product, Guid>
+public class ProductListController : Base.EntityController<Product, Guid> 
 {
     private readonly IProductRepository productRepository;
 
@@ -17,10 +17,24 @@ public class ProductListController : Base.EntityController<Product, Guid>
     public async Task<IActionResult> Index()
     {
         var product = await productRepository.GetAll();
-        return View(product);
+        return View(Ok,product);
     }
+    public async Task<IActionResult> GetProductByOrganizationName(string organizationName)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(organizationName))
+                ModelState.AddModelError("Customer", "Not found organization");
 
-
+            var faund = await productRepository.GetByName(organizationName);
+            return View(Ok, faund);
+        }
+        catch (Exception ex)
+        {
+            TempData["error"] = ex.Message;
+            return BadRequest();
+        }
+    }
     public async Task<IActionResult> Create(Product product)
     {
         if (product is null) throw new ArgumentNullException(nameof(product));
@@ -30,16 +44,17 @@ public class ProductListController : Base.EntityController<Product, Guid>
                 ModelState.AddModelError("Customer", "The Display cannot exactly match the Name.");
 
             if (product.Price >= 10) // toggle switch limit 
-            {
                 ModelState.AddModelError("Vendor", "The delivery price is too low.");
-            }
+            if (product.Price <= 0)
+                ModelState.AddModelError("Vendor", "The price of the product cannot be negative");
+
             if (ModelState.IsValid)
             {
-                await productRepository.AddProduct(default);
+                await productRepository.Add(product);
                 TempData["success"] = "Product create successfully";
                 return RedirectToAction("Index");
             }
-            return View(product);
+            return View(Ok,product);
         }
         catch (Exception ex)
         {
