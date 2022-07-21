@@ -14,6 +14,7 @@ public class SoftBoxDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<Room> Rooms { get; set; }
+    public DbSet<RoomStatus> RoomStatuses { get; set; }
     public DbSet<RoomUser> RoomUsers { get; set; }
     public DbSet<RoomUserType> RoomUserTypes { get; set; }
     public DbSet<RoomMessage> RoomMessages { get; set; }
