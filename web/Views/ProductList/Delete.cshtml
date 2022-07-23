@@ -1,0 +1,22 @@
+﻿@model SoftBox.DataBase.Entities.Product
+
+<form method="post" asp-action="DeletePost">
+    <input asp-for="Id" hidden />
+    <dib class="border p-3 mt-4">
+        <dib class="row pb-2">
+            <h2 class="text-primary">Delete Product</h2>
+            <hr />
+        </dib>
+
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" disabled class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-danger" style="width:150px">Delete</button>
+        <a asp-controller="ProductList" asp-action="AllProducts" class="btn btn-secondary" style="width:150px">
+            Back to List
+        </a>
+    </dib>
+</form>
+

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SoftBox.DataBase.Entities.Product>
+
+<div class = "container p-3">
+    <div class="row pt-4">
+        <div class = "col-6">
+            <h2 class="text-primary">Product List</h2>
+        </div>
+        <div class ="col-6 text-end">
+            <a asp-action="Create" asp-controller="ProductList" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Product
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<table class ="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Organization
+        </th>
+        <tr/>
+    </thead>
+
+    <tbody>
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td width="50%">
+                    @obj.Name
+                </td>
+                <td width="50%">
+                    @obj.Price
+                </td>
+                <td width="50%">
+                    @obj.Organization
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="ProductList" asp-action="Edit" asp-route-id="@obj.Id"><i class="bi bi-pencil-square"></i>Edit</a>    
+                    </div> 
+                    <td width="50%">
+                        <a asp-controller="ProductList" asp-action="Delete" asp-route-id="@obj.Id"><i class="bi bi-trash"></i>Delete</a>
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>

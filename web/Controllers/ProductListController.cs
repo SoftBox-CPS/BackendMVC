@@ -5,7 +5,7 @@ using SoftBox.DataBase.InterfacesRepository;
 
 namespace MVCWebApplication.Controllers;
 
-[Authorize]
+//[Authorize]
 public class ProductListController : Base.EntityController<Product, Guid> 
 {
     private readonly IProductRepository productRepository;
@@ -14,10 +14,11 @@ public class ProductListController : Base.EntityController<Product, Guid>
     {
         this.productRepository = productRepository;
     }
-    public async Task<IActionResult> Index()
+    [HttpGet]
+    public async Task<IActionResult> AllProducts()
     {
         var product = await productRepository.GetAll();
-        return View(Ok,product);
+        return View(product);
     }
     public async Task<IActionResult> GetProductByOrganizationName(string organizationName)
     {
@@ -35,6 +36,13 @@ public class ProductListController : Base.EntityController<Product, Guid>
             return BadRequest();
         }
     }
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
     public async Task<IActionResult> Create(Product product)
     {
         if (product is null) throw new ArgumentNullException(nameof(product));
@@ -63,6 +71,13 @@ public class ProductListController : Base.EntityController<Product, Guid>
         }
     }
 
+    [HttpGet]
+    public IActionResult Edit()
+    {
+        return View();
+    }
+
+    [HttpPost]
     public async Task<IActionResult> Edit(Product product)
     {
         if (product is null) throw new ArgumentNullException(nameof(product));
@@ -79,6 +94,13 @@ public class ProductListController : Base.EntityController<Product, Guid>
         }
 
     }
+    [HttpGet]
+    public IActionResult Delete()
+    {
+        return View();
+    }
+
+    [HttpPost,ActionName("DeletePost")]
     public async Task<IActionResult> Delete(Guid id)
     {
         try

@@ -23,13 +23,13 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white">About</a>
-                    <li />
 
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Chat" asp-action="Index">Chat</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="ProductList" asp-action="AllProducts">ProductList</a>
+                    <li />
 
                     <!--TODO а где это должно быть? Заместо войти должна быть страница пользователя-->
                         @if (User.Identity.IsAuthenticated)
@@ -50,6 +50,8 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="UserProfile">Моя страница</a>
                     <li />
+
+                    
                 </ul>
             </div>
         </nav>
