@@ -26,7 +26,7 @@ public class ChatHub : Hub
             {
                 RoomUserId = chatUser.Id,
                 Message = message,
-                DateTimeUTCMessage = dateTimeMessage
+                CreateDateTimeOffset = dateTimeMessage
             }
             );
         await Clients.Group(chatUser.RoomId.ToString()).SendAsync("ReceiveMessage", chatUser.UserId, message, dateTimeMessage);

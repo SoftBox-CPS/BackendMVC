@@ -8,7 +8,7 @@ public class RoomMessage : Base.Entity<Guid>
 {  
     public RoomMessage()
     {
-        DateTimeUTCMessage = DateTimeOffset.Now;
+        CreateDateTimeOffset = DateTimeOffset.Now;
     }
     [Required]
     [Column("message")]
@@ -20,5 +20,6 @@ public class RoomMessage : Base.Entity<Guid>
     public Guid RoomUserId { get; set; }
     public RoomUser RoomUser { get; set; }
     [Required]
-    public DateTimeOffset DateTimeUTCMessage { get; set; }
+    [Column("create_date_time_offset")]
+    public DateTimeOffset CreateDateTimeOffset { get; set; }
 }

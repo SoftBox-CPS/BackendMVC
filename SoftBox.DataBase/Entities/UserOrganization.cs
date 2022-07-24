@@ -9,14 +9,14 @@ public class UserOrganization : Base.Entity<Guid>
 {
     public UserOrganization()
     {
-        DateStartOffset = DateTimeOffset.Now; 
+        StartDateTimeOffset = DateTimeOffset.Now; 
     }
 
     [Required]
-    [Column("date_start_offset")]
-    public DateTimeOffset DateStartOffset { get; set; }
-    [Column("date_end_offset")]
-    public DateTimeOffset? DateEndOffset { get; set; }
+    [Column("start_date_time_offset")]
+    public DateTimeOffset StartDateTimeOffset { get; set; }
+    [Column("end_date_time_offset")]
+    public DateTimeOffset? EndDateTimeOffset { get; set; }
 
     [Required]
     [Column("user_id")]

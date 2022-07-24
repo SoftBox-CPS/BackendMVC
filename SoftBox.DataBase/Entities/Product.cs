@@ -8,13 +8,13 @@ public class Product : Base.EntityName<Guid>
 {
     public Product()
     {
-        CreatedDateOffset = DateTimeOffset.Now;
+        CreateDateTimeOffset = DateTimeOffset.Now;
         ProductCategories = new HashSet<ProductCategory>();
         Rooms = new HashSet<Room>();
     }
     [Required]
-    [Column("created_date_offset")]
-    public DateTimeOffset CreatedDateOffset { get; set; }
+    [Column("create_date_time_offset")]
+    public DateTimeOffset CreateDateTimeOffset { get; set; }
     [Required]
     [Column("price", TypeName = "decimal(10, 2)")]
     public decimal Price { get; set; }
