@@ -34,6 +34,17 @@ public class RoomRepository : Base.DbNamedRepository<Room, Guid>, InterfacesRepo
         return item;
     }
 
+    public async Task<Room> AddRoom(Room roomItem, CancellationToken cancel = default)
+    {
+        if (roomItem is null) throw new ArgumentNullException( nameof(roomItem));
+
+        await db.AddAsync(roomItem, cancel).ConfigureAwait(false);
+
+        await SaveChanges(cancel).ConfigureAwait(false);
+
+        return roomItem;
+    }
+
     public async Task<Room> GetRoomUser(Guid roomId, CancellationToken cancel = default)
     {
 

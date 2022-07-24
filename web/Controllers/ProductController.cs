@@ -6,11 +6,11 @@ using SoftBox.DataBase.InterfacesRepository;
 namespace MVCWebApplication.Controllers;
 
 //[Authorize]
-public class ProductListController : Base.EntityController<Product, Guid> 
+public class ProductController : Base.EntityController<Product, Guid> 
 {
     private readonly IProductRepository productRepository;
 
-    public ProductListController(IProductRepository productRepository) : base(productRepository)
+    public ProductController(IProductRepository productRepository) : base(productRepository)
     {
         this.productRepository = productRepository;
     }
