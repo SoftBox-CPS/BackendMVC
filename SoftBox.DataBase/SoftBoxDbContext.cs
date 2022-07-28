@@ -30,6 +30,8 @@ public class SoftBoxDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SoftBoxDbContext).Assembly);
 
         addGenerateGuidToId(modelBuilder);
+
+        SeedData.Initialize(modelBuilder);
     }
 
     private void addGenerateGuidToId(ModelBuilder modelBuilder)
